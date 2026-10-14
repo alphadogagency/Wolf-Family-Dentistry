@@ -2,7 +2,7 @@
 
 The Astro site lives in `wolf-family-dentistry/`. Commands work from this workspace root. Node 22.12+ is required.
 
-GitHub repository: https://github.com/bryguy-404/Wolf-Family-Dentistry. Source code, site media, patient PDF and migration evidence are versioned. Dependencies, build output, local QA screenshots, environment secrets and duplicate ZIP backups are excluded. The ZIP backup remains available locally under `wolf-family-dentistry/migration/backups/`.
+GitHub repository: https://github.com/alphadogagency/Wolf-Family-Dentistry. Source code, site media, patient PDF and migration evidence are versioned. Dependencies, build output, local QA screenshots, environment secrets and duplicate ZIP backups are excluded. The ZIP backup remains available locally under `wolf-family-dentistry/migration/backups/`.
 
 ```sh
 npm install
@@ -53,7 +53,9 @@ The embed loaded at 320, 375, 768 and 1280px without horizontal overflow or brow
 
 The source contains two different email addresses and an old agency copyright credit; these are preserved and documented for review. Production deployment and DNS changes remain pending.
 
-Cloudflare Pages uses the repository root, `npm run build`, and output directory `wolf-family-dentistry/dist`, with Node 22. The root `wrangler.toml` declares this output path so Pages deploys the workspace's built files instead of looking for a root-level `dist`. The GitHub repository is connected to Cloudflare for deployment.
+Cloudflare Pages uses the repository root, `npm run build`, and output directory `wolf-family-dentistry/dist`, with Node 22. The root `wrangler.toml` declares this output path so Pages deploys the workspace's built files instead of looking for a root-level `dist`.
+
+The repository moved to the `alphadogagency` GitHub organization. `.github/workflows/deploy-pages.yml` replaces the old native Git integration: pushes to `main` run `npm ci`, `npm run check`, and `npm run build`, then deploy through Wrangler to the existing `wolf-family-dentistry` Pages project. The workflow also supports manual runs on `main`; production deployments run one at a time. GitHub repository secrets `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` are required. The dedicated token needs only Cloudflare Pages Edit permission on the hosting account. Keep credentials out of this repository. Disable Cloudflare's native automatic branch deployments when enabling this workflow to avoid duplicate deployments.
 
 The root lockfile includes the optional native binaries for Linux and macOS. If npm regenerates it from an existing Mac `node_modules` folder, it can omit Linux bindings and break Cloudflare's clean install. Regenerate in a clean temporary workspace without `node_modules`, retain the existing dependency versions, and verify with a fresh Linux `npm ci` and build before committing a lockfile change.
 
